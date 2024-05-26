@@ -1,38 +1,47 @@
+#include <cstdlib>
 #include <iostream>
 #include <chrono>
-#include <unistd.h>
 #include <thread>
-
-using namespace std;
-using namespace std::chrono_literals;
-
-std::chrono::duration<double> timer_in_seconds(int secs) {
-
-  // Now we start the monotonic clock that will never be adjusted and count it as start
-  const auto start = std::chrono::steady_clock::now();
-
-  // we use the sleep function to sleep the allocated time by user
-  sleep(secs);
-
-  // Now we end the monotonic clock and count it as end
-  const auto end{std::chrono::steady_clock::now()};
-
-  // This is to output the durations (secs) of the end and start;
-  const std::chrono::duration<double> elapsed_seconds{end - start};
-
-  return elapsed_seconds;
-
-}
+#include <unistd.h>
 
 int main (int argc, char *argv[]) {
-  int user_time = 0;
+  std::cout << "\n**************************\n";
+  std::cout << "1. Start | 2. Restart | 3. End";
+  std::cout << "\n**************************\n";
 
-  // Taking the user input in secs
-  std::cout << "Start Timer: ";
-  cin >> user_time;
+  int input = 0;
+  std::cin >> input;
 
-  // Now we just print the time that user sleep
-  std::cout << timer_in_seconds(user_time).count() << '\n';
+  switch (input) {
+    { case 1:
+      auto u_time = 0;
+      std::cout << "\nInput Amount of Times(seconds) :\n";
+      std::cin >> u_time;
+
+      auto start = std::chrono::steady_clock::now();
+      auto end = start + std::chrono::seconds(u_time);
+
+      while (std::chrono::steady_clock::now() <= end) {
+        auto current_time = std::chrono::steady_clock::now();
+        auto elapsed_seconds = std::chrono::duration<double>(current_time - start);
+        system("clear");
+        std::cout << "\n**************************\n";
+        std::cout << "Seconds : " << (int)elapsed_seconds.count() << " s\n";
+        std::cout << "\n**************************\n";
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      };
+      break; }
+    case 2:
+      std::cout << "To Be Implemented";
+      break;
+    case 3:
+      break;
+    default:
+      std::cout << "\n Please Enter a Valid Commands";
+      break;
+  }
+
 
   return 0;
 }
