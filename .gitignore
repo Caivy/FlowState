@@ -32,6 +32,6 @@
 *.app
 
 out/
-/TODO
+TODO.md
 .cache/
 *.json
