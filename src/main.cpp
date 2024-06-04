@@ -10,11 +10,11 @@
 void my_timer() {
 
   int u_time = 0;
-  std::cout << "\nInput Amount of Time (seconds):\n";
+  std::cout << "\nInput Amount of Time (minutes):\n";
   std::cin >> u_time;
 
   auto start = std::chrono::steady_clock::now();
-  auto end = start + std::chrono::seconds(u_time);
+  auto end = start + std::chrono::minutes(u_time);
 
   while (std::chrono::steady_clock::now() <= end) {
     auto current_time = std::chrono::steady_clock::now();
@@ -83,6 +83,7 @@ int main(int argc, char *argv[]) {
         case 1: {
             my_timer();
             music_player();
+            break;
         }
         case 2:
             my_timer();
